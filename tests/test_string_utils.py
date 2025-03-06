@@ -7,5 +7,5 @@ def test_convert_to_uppercase():
 def test_reverse_string():
     assert string_utils.reverse_string("hello") == "olleh"
 
-def test_word_count():
-    assert string_utils.word_count("Hello") == 5
+def test_character_count():
+    assert string_utils.character_count("Hello") == 5

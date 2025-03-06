@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "logictools"
-version = "0.1.0"
+version = "0.1.1"
 description = "A simple utility package for string and math functions"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["RANGDAL PAVANSAI <psai49779@gmail.com>"]
 license = "MIT"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.7"

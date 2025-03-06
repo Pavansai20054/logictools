@@ -13,5 +13,3 @@ def factorial(n):
         return f"{e}"
     except Exception as e:
         return f"An unexpected error occurred: {e}"
-    
-print(factorial(-5))

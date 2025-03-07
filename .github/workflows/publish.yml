@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: main  # Ensure we're checking out the main branch
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -34,7 +36,7 @@ jobs:
           poetry version patch
           git add pyproject.toml
           git commit -m "Bump version to $(poetry version -s)"
-          git push origin main  # Correct branch name
+          git push origin main  # Push to the correct branch
 
       # Verify the incremented version
       - name: Verify Version Increment

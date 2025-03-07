@@ -20,8 +20,20 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Configure Git User
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Install dependencies
         run: poetry install --no-root
+
+      - name: Increment Version (Patch)
+        run: |
+          poetry version patch
+          git add pyproject.toml
+          git commit -m "Bump version to $(poetry version -s)"
+          git push origin main  # Change branch if necessary
 
       - name: Build package
         run: poetry build
@@ -29,4 +41,4 @@ jobs:
       - name: Publish to PyPI
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
-        run: poetry publish --username __token__ --password $POETRY_PYPI_TOKEN_PYPI
+        run: poetry publish --username __token__ --password $POETRY_PYPI_TOKEN

@@ -34,7 +34,7 @@ jobs:
           poetry version patch
           git add pyproject.toml
           git commit -m "Bump version to $(poetry version -s)"
-          git push origin main  # Change branch if necessary
+          git push origin main  # Correct branch name
 
       # Verify the incremented version
       - name: Verify Version Increment

@@ -36,6 +36,12 @@ jobs:
           git commit -m "Bump version to $(poetry version -s)"
           git push origin main  # Change branch if necessary
 
+      # Verify the incremented version
+      - name: Verify Version Increment
+        run: |
+          echo "New version is $(poetry version -s)"
+          poetry version
+
       - name: Build package
         run: poetry build
 

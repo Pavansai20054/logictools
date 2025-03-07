@@ -30,20 +30,6 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root
 
-      # Increment the version number (patch), commit the change, and push it to the repository
-      - name: Increment Version (Patch)
-        run: |
-          poetry version patch
-          git add pyproject.toml
-          git commit -m "Bump version to $(poetry version -s)"
-          git push origin main  # Push to the correct branch
-
-      # Verify the incremented version
-      - name: Verify Version Increment
-        run: |
-          echo "New version is $(poetry version -s)"
-          poetry version
-
       - name: Build package
         run: poetry build
 

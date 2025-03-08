@@ -12,8 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 
-          ref: main 
+          fetch-depth: 0  # Fetch full history to access all branches
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -37,10 +36,11 @@ jobs:
       - name: Bump version
         run: |
           poetry version patch
-          git checkout main  # Ensure we're on the main branch
+          git checkout main  # Ensure we are on the main branch
           git add pyproject.toml
           git commit -m "Bump version to $(poetry version -s)"
-          git push origin main  # Push changes to the main branch
+          git pull origin main --rebase  # Sync with latest changes
+          git push origin main  # Push updated version
 
       - name: Publish to PyPI
         env:

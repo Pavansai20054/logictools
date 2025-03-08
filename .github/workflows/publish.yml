@@ -24,21 +24,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install build twine
 
-      - name: Determine next version
-        id: version
-        run: |
-          VERSION=$(date +'%Y.%m.%d.%H%M')  # Generate unique version
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          sed -i "s/^version = .*/version = \"$VERSION\"/" pyproject.toml  # Update pyproject.toml
-
-      - name: Commit and push updated version
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add pyproject.toml
-          git commit -m "Bump version to ${{ env.VERSION }}"
-          git push origin main
-
       - name: Build package
         run: python -m build
 

@@ -27,11 +27,9 @@ jobs:
       - name: Determine next version
         id: version
         run: |
-          echo "VERSION=$(date +'%Y.%m.%d.%H%M')" >> $GITHUB_ENV
-
-      - name: Update package version
-        run: |
-          sed -i "s/^version = .*/version = \"${{ env.VERSION }}\"/" pyproject.toml
+          VERSION=$(date +'%Y.%m.%d.%H%M')  # Generate unique version
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          sed -i "s/^version = .*/version = \"$VERSION\"/" pyproject.toml  # Update pyproject.toml
 
       - name: Commit and push updated version
         run: |

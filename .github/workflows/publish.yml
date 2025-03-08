@@ -1,4 +1,4 @@
-name: Publish Python Package to PyPI
+name: "Build logictools v${{ github.run_number }}"
 
 on:
   push:
@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1  # Speeds up checkout by fetching only the latest commit
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -21,14 +23,20 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip setuptools wheel
           pip install --timeout=60 --no-cache-dir build twine
 
+      - name: Extract version number
+        id: get_version
+        run: |
+          VERSION=$(grep -Po '(?<=version = ")[^"]*' pyproject.toml)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Build package
-        run: python -m build
+        run: python -m build --no-isolation  # Uses system dependencies to speed up build
 
       - name: Publish to PyPI
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: twine upload dist/*
+        run: twine upload --non-interactive dist/*

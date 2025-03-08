@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "logictools"
-version = "0.1.3" 
+version = "0.1.3"
 description = "A simple utility package for string and math functions"
 authors = ["RANGDAL PAVANSAI <psai49779@gmail.com>"]
 license = "MIT"

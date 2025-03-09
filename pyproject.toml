@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "logictools"
-version = "2025.03.08.1708"
+version = "0.1.0"
 description = "A simple utility package for string and math functions"
 authors = ["RANGDAL PAVANSAI <psai49779@gmail.com>"]
 license = "MIT"
@@ -13,5 +13,5 @@ python = "^3.7"
 pytest = "^7.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

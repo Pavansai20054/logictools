@@ -1,4 +1,4 @@
-name: "Build and Publish LogicTools"
+name: Publish to PyPI
 
 on:
   push:
@@ -7,41 +7,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
-    name: "logictools V-0.1.3"
+    name: Build and Publish LogicTools
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 1  # Fetch only the latest commit
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.9"
 
+      - name: Install Poetry
+        run: pip install poetry
+
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip setuptools wheel
-          pip install --timeout=60 --no-cache-dir build twine
-
-      - name: Extract version number
-        id: get_version
-        run: |
-          VERSION=$(grep -Po '(?<=version = ")[^"]*' pyproject.toml)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "##[set-output name=version;]$VERSION"
-
-      - name: Rename job dynamically
-        run: echo "Build logictools v${{ env.VERSION }}"
+        run: poetry install --no-interaction --no-root
 
       - name: Build package
-        run: python -m build --no-isolation  # Uses system dependencies to speed up build
+        run: poetry build
 
       - name: Publish to PyPI
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: twine upload --non-interactive dist/*
+        run: poetry publish --non-interactive

@@ -333,3 +333,7 @@ python -c "import NAME-OF-YOUR-PACKAGE; print(NAME-OF-YOUR-PACKAGE.factorial(5))
 - pip install NAME-OF-YOUR-PACKAGE
 - python -c "import NAME-OF-YOUR-PACKAGE; print(NAME-OF-YOUR-PACKAGE.factorial(5))"
 ```
+
+
+### Note: 
+- Everytime you commit new file you much change the version of your package in pyproject.toml

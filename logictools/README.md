@@ -1,7 +1,5 @@
 # LogicTools
 
-![LogicTools Banner](assets/banner.webp)
-
 ## Overview
 
 LogicTools is a Python package that provides utility functions for string and mathematical operations. It is designed to simplify common tasks such as string manipulation and basic mathematical calculation.

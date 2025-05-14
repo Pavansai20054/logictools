@@ -13,6 +13,7 @@ jobs:
   build-test-and-publish:
     runs-on: ubuntu-latest
     name: Build, Test, and Publish LogicTools
+    environment: pypi  # Add this for better secret management
 
     env:
       POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
@@ -59,6 +60,16 @@ jobs:
           flags: unittests
           verbose: true
 
+      - name: Bump version (patch)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          poetry version patch
+          echo "NEW_VERSION=$(poetry version -s)" >> $GITHUB_ENV
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git commit -am "Bump version to ${NEW_VERSION} [skip ci]"
+          git push
+
       - name: Build package
         run: |
           poetry build
@@ -72,12 +83,9 @@ jobs:
           fi
           echo "✅ PyPI token is set"
 
-      - name: Clean previous builds (if any)
-        run: |
-          rm -rf dist/
-
       - name: Publish to PyPI
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           poetry publish --build --no-interaction --repository pypi
-          echo "✅ Published to PyPI successfully"
+          echo "✅ Published version ${NEW_VERSION} to PyPI successfully"
+          

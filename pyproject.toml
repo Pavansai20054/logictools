@@ -7,10 +7,14 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+# Updated Python version constraint to match GitHub Actions (3.9)
+# and be compatible with pytest-cov >= 6.1.1
+python = "^3.9"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.0"
+# Added pytest-cov as a development dependency
+pytest-cov = "^6.1.1" # Using a version known to require Python >= 3.9
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

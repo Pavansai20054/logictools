@@ -80,3 +80,4 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           poetry publish --build --no-interaction --repository pypi
+          echo "✅ Published to PyPI successfully"

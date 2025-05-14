@@ -1,4 +1,4 @@
-name: Publish to PyPI
+name: Build, Test, and Publish
 
 on:
   push:
@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-publish:
+  build-test-and-publish:
     runs-on: ubuntu-latest
-    name: Build and Publish LogicTools
+    name: Build, Test, and Publish LogicTools
 
     steps:
       - name: Checkout repository
@@ -26,10 +26,22 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
 
+      - name: Run tests with coverage
+        run: |
+          poetry run pytest --cov --cov-branch --cov-report=xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: true
+          verbose: true
+
       - name: Build package
         run: poetry build
 
       - name: Publish to PyPI
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
         run: poetry publish

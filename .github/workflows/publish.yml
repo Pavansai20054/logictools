@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -21,22 +24,35 @@ jobs:
           python-version: "3.9"
 
       - name: Install Poetry
-        run: pip install poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
 
-      - name: Ensure lock file is up-to-date
+      - name: Cache Poetry virtualenv
+        uses: actions/cache@v3
+        id: cache-virtualenv
+        with:
+          path: .venv
+          key: venv-${{ hashFiles('pyproject.toml', 'poetry.lock') }}
+          restore-keys: |
+            venv-
+
+      - name: Install dependencies
         run: |
-          poetry lock --no-interaction
-          poetry install --no-interaction --no-root
+          poetry install --no-interaction --no-root --with dev
+          poetry check
 
       - name: Run tests with coverage
         run: |
-          poetry run pytest --cov --cov-branch --cov-report=xml
+          poetry run pytest --cov=logictools --cov-branch --cov-report=xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.xml
-          fail_ci_if_error: true
+          flags: unittests
           verbose: true
 
       - name: Build package
@@ -46,4 +62,5 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
-        run: poetry publish
+        run: |
+          poetry publish --username __token__ --password $PYPI_API_TOKEN

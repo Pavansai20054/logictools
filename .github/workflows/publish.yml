@@ -28,6 +28,7 @@ jobs:
         with:
           virtualenvs-create: true
           virtualenvs-in-project: true
+          version: "1.8.2"  # Pinned version for stability
 
       - name: Cache Poetry virtualenv
         uses: actions/cache@v3
@@ -58,9 +59,19 @@ jobs:
       - name: Build package
         run: poetry build
 
+      - name: Verify PyPI token
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if [ -z "${{ secrets.PYPI_API_TOKEN }}" ]; then
+            echo "::error::PyPI token not found in secrets"
+            exit 1
+          fi
+          echo "PyPI token found (first 4 chars: ${${{ secrets.PYPI_API_TOKEN }}:0:4})"
+
       - name: Publish to PyPI
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
-          PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+          POETRY_HTTP_BASIC_PYPI_USERNAME: '__token__'
+          POETRY_HTTP_BASIC_PYPI_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
-          poetry publish --username __token__ --password "$PYPI_API_TOKEN"
+          poetry publish --build --no-interaction

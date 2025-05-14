@@ -23,8 +23,9 @@ jobs:
       - name: Install Poetry
         run: pip install poetry
 
-      - name: Install dependencies
+      - name: Ensure lock file is up-to-date
         run: |
+          poetry lock --no-interaction
           poetry install --no-interaction --no-root
 
       - name: Run tests with coverage

@@ -59,6 +59,10 @@ jobs:
           flags: unittests
           verbose: true
 
+      - name: Build package
+        run: |
+          poetry build
+
       - name: Verify PyPI token
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
@@ -68,7 +72,12 @@ jobs:
           fi
           echo "✅ PyPI token is set"
 
+      - name: Clean previous builds (if any)
+        run: |
+          rm -rf dist/
+
       - name: Publish to PyPI
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: poetry publish --build --no-interaction
+        run: |
+          poetry publish --build --no-interaction --repository pypi
   

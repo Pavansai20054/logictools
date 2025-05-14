@@ -1,32 +1,14 @@
-[project]
+[tool.poetry]
 name = "logictools"
-version = "0.1.11"  # Incremented to avoid conflicts
+version = "0.1.10"
 description = "A simple utility package for string and math functions"
-authors = [
-    { name = "PAVANSAI RANGDAL", email = "pavansai.20066@gmail.com" }
-]
+authors = ["PAVANSAI RANGDAL <pavansai.20066@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-keywords = ["utilities", "string", "math", "toolkit"]
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
-requires-python = ">=3.9"
-dependencies = [
-    "requests>=2.25.0",
-    "numpy>=1.21.0",
-]
-# dynamic = ["version", "readme"]  # Uncomment if version or readme is dynamic
-
-[project.urls]
-Homepage = "https://github.com/Pavansai20054/logictools"
-Repository = "https://github.com/Pavansai20054/logictools"
-
-[tool.poetry]
-# Minimal [tool.poetry] section for Poetry-specific settings
 packages = [{ include = "logictools" }]
+homepage = "https://github.com/Pavansai20054/logictools"
+repository = "https://github.com/Pavansai20054/logictools"
+keywords = ["utilities", "string", "math", "toolkit"]
 
 [tool.poetry.dependencies]
 python = ">=3.9"

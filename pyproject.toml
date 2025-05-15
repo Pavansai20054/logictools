@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "logictools"
-version = "0.1.12"
+version = "0.1.13"
 description = "A simple utility package for string and math functions"
 authors = [
     {name = "PAVANSAI RANGDAL", email = "pavansai.20066@gmail.com"}

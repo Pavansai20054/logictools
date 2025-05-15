@@ -6,13 +6,13 @@ build-backend = "poetry.core.masonry.api"
 name = "logictools"
 version = "0.1.13"
 description = "A simple utility package for string and math functions"
-authors = [
-    {name = "PAVANSAI RANGDAL", email = "pavansai.20066@gmail.com"}
-]
-license = {text = "MIT"}
 readme = "README.md"
-keywords = ["utilities", "string", "math", "toolkit"]
 requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+    { name = "PAVANSAI RANGDAL", email = "pavansai.20066@gmail.com" }
+]
+keywords = ["utilities", "string", "math", "toolkit"]
 dependencies = [
     "requests>=2.25.0",
     "numpy>=1.21.0"
@@ -23,6 +23,7 @@ Homepage = "https://github.com/Pavansai20054/logictools"
 Repository = "https://github.com/Pavansai20054/logictools"
 
 [tool.poetry]
+# Poetry-specific settings not covered by PEP 621
 packages = [{ include = "logictools" }]
 
 [tool.poetry.group.dev.dependencies]

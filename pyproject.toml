@@ -1,19 +1,31 @@
-[tool.poetry]
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
 name = "logictools"
 version = "0.1.12"
 description = "A simple utility package for string and math functions"
-authors = ["PAVANSAI RANGDAL <pavansai.20066@gmail.com>"]
-license = "MIT"
+authors = [
+    {name = "PAVANSAI RANGDAL", email = "pavansai.20066@gmail.com"}
+]
+license = {text = "MIT"}
 readme = "README.md"
-packages = [{ include = "logictools" }]
+keywords = ["utilities", "string", "math", "toolkit"]
+dependencies = [
+    "requests>=2.25.0",
+    "numpy>=1.21.0",
+]
+requires-python = ">=3.9"
+
+[project.urls]
 homepage = "https://github.com/Pavansai20054/logictools"
 repository = "https://github.com/Pavansai20054/logictools"
-keywords = ["utilities", "string", "math", "toolkit"]
 
-[tool.poetry.dependencies]
-python = ">=3.9"
-requests = ">=2.25.0"
-numpy = ">=1.21.0"
+[tool.poetry]
+# Keep this section for Poetry-specific configuration
+# and for fields not yet supported in [project]
+packages = [{ include = "logictools" }]
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.0"
@@ -28,7 +40,3 @@ pytest-watch = "^4.2.0"
 pythonpath = ["."]
 testpaths = ["tests"]
 addopts = "--cov=logictools --cov-report=term --cov-report=xml --cov-fail-under=80"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
